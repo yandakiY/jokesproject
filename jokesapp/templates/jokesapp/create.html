@@ -9,30 +9,26 @@
     
     <h1>Add a joke</h1>
     <div>
-        <form action="{% url 'jokesapp:post_update' joke.id %}" method="post">
+        <form action="{% url 'jokesapp:post_create' %}" method="post">
             {% csrf_token %}
             <div>
                 <label for="category">Category</label>
                 <select name="category" id="category">
                     {% for cat in categories %}
-                        {% if cat.id == joke.category.id %}
-                            <option value="{{joke.category.id}}" selected>{{cat.libelle}}</option>
-                        {% else %}
-                            <option value="{{joke.category.id}}">{{cat.libelle}}</option>
-                        {% endif %}
+                        <option value={{cat.id}}>{{cat.libelle}}</option>
                     {% endfor %}
                 </select>
             </div>
             <div>
                 <label for="question">Question : </label>
-                <input type="text" name="question" id="question" value="{{joke.question}}">
+                <input type="text" name="question" id="question">
             </div>
             <div>
                 <label for="answer">Answer : </label>
-                <input type="text" name="answer" id="answer" value="{{joke.answer}}">
+                <input type="text" name="answer" id="answer">
             </div>
             <div>
-                <input type="submit" value="Update">
+                <input type="submit" value="Save">
             </div>
         </form>
         <a href="{% url 'jokesapp:Index' %}">Go home</a>

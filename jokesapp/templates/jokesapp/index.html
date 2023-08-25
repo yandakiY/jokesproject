@@ -7,6 +7,20 @@
 </head>
 <body>
     
-    Your name is : {{name}}
+    <h1>Lists of jokes</h1>
+    <div>
+        <a href="{% url 'jokesapp:create' %}">Add a joke</a>
+    </div>
+    <div>
+        <ul>
+            {% for joke in jokes %}
+                <li>
+                    {{joke.question}}
+                    ({{joke.category}}) - <a href="{% url 'jokesapp:update' joke.id %}">Update</a> - <a href="{% url 'jokesapp:delete' joke.id %}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>

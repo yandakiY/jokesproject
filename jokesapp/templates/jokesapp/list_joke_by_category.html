@@ -7,10 +7,9 @@
 </head>
 <body>
     
-    <h1>Lists of jokes</h1>
-    <a href="{% url 'jokesapp:categories' %}">Categories</a>
+    <h1>Jokes for : {{cat.libelle}} </h1>
     <div>
-        <a href="{% url 'jokesapp:create' %}">Add a joke</a>
+        <a href="{% url 'jokesapp:categories' %}">Return</a>
     </div>
     <div>
         <ul>

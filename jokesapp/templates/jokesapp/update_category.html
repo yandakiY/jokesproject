@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>update category {{category.id}} </h1>
+    <div>
+        <form action="{% url 'jokesapp:post_update_cat' category.id %}" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="libelle">Category : </label>
+                <input type="text" name="libelle" id="libelle" value="{{category.libelle}}">
+            </div>
+            <div>
+                <input type="submit" value="Save">
+            </div>
+        </form>
+        <a href="{% url 'jokesapp:categories' %}">Go home</a>
+    </div>
+    
+</body>
+</html>

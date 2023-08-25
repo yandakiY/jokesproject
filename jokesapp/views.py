@@ -77,3 +77,52 @@ def delete(request , joke_id):
     
     # redirection
     return HttpResponseRedirect(reverse("jokesapp:Index" , args=()))
+
+
+# Categories views
+class IndexCategory(generic.ListView):
+    template_name = "jokesapp/lists_categories.html"
+    context_object_name = "categories"
+    
+    def get_queryset(self):
+        return Category.objects.all().order_by("libelle")
+    
+
+def create_cat(request):
+    return render(request , "jokesapp/create_category.html")
+
+def post_create_cat(request):
+    # get libelle post
+    c = Category.objects.create(libelle = request.POST.get("libelle"))
+    c.save()
+    return HttpResponseRedirect(reverse("jokesapp:categories" , args=()))
+
+def update_cat(request , cat_id):
+    # send category which correspond to id
+    cat = Category.objects.get(id = cat_id)
+    return render(request , "jokesapp/update_category.html" , {"category":cat})
+
+def post_update_cat(request , cat_id):
+    # get category which correspond to id
+    cat = Category.objects.get(id = cat_id)
+    cat.libelle = request.POST.get("libelle")
+    cat.save()
+    return HttpResponseRedirect(reverse("jokesapp:categories" , args=()))
+
+
+def delete_cat(request , cat_id):
+    # /get category which corrspond to cat_id
+    c = Category.objects.get(id = cat_id)
+    c.delete()
+    
+    return HttpResponseRedirect(reverse("jokesapp:categories" , args=()))
+
+
+# views joke by category
+def display_joke_by_category(request , cat_id):
+    cat = Category.objects.get(id = cat_id)
+    joke_for_cat = get_list_or_404(Joke , category = cat)
+    
+    print(joke_for_cat)
+    
+    return render(request , "jokesapp/list_joke_by_category.html" , {"jokes":joke_for_cat , "category":cat})

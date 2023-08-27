@@ -11,10 +11,19 @@ class Index(generic.ListView):
     context_object_name = "jokes"
     
     def get_queryset(self):
-        return Joke.objects.all().order_by('-date_pub');
+        return Joke.objects.all().order_by('-date_pub').filter(view = True);
     
+# display all joke in corbeille
+class IndexJokeRemove(generic.ListView):
+    
+    template_name = "jokesapp/jokes_remove.html"
+    context_object_name = "jokes"
+    
+    def get_queryset(self):
+        return Joke.objects.all().order_by('-date_pub').filter(view = False);
 
-# views create jokes page 
+
+# views create jokes page
 def create(request):
     # we need to send list of category in this page
     list_cat = Category.objects.all();
@@ -78,6 +87,29 @@ def delete(request , joke_id):
     # redirection
     return HttpResponseRedirect(reverse("jokesapp:Index" , args=()))
 
+# Send Joke in corbeille Joke
+def remove_joke(request , joke_id):
+    # get joke 
+    j = Joke.objects.get(id = joke_id)
+    # j = get_object_or_404(Joke , id=joke_id)
+    print(j.question)
+    j.view = False
+    j.save()
+    # dont need to add save()
+    
+    # redirection
+    return HttpResponseRedirect(reverse("jokesapp:Index" , args=()))
+
+def restore_joke(request , joke_id):
+    # get joke 
+    j = Joke.objects.get(id = joke_id)
+    # j = get_object_or_404(Joke , id=joke_id)
+    # print(j.question)
+    j.view = True
+    j.save()
+    # redirection
+    return HttpResponseRedirect(reverse("jokesapp:Index" , args=()))
+
 
 # Categories views
 class IndexCategory(generic.ListView):
@@ -85,8 +117,16 @@ class IndexCategory(generic.ListView):
     context_object_name = "categories"
     
     def get_queryset(self):
-        return Category.objects.all().order_by("libelle")
+        return Category.objects.all().order_by("libelle").filter(view = True)
     
+
+# display all categories in corbeille
+class IndexCategoryRemove(generic.ListView):
+    template_name = "jokesapp/categories_remove.html"
+    context_object_name = "categories"
+    
+    def get_queryset(self):
+        return Category.objects.all().order_by("libelle").filter(view = False)
 
 def create_cat(request):
     return render(request , "jokesapp/create_category.html")
@@ -117,6 +157,23 @@ def delete_cat(request , cat_id):
     
     return HttpResponseRedirect(reverse("jokesapp:categories" , args=()))
 
+# Send category in corbeille
+def remove_cat(request , cat_id):
+    # /get category which corrspond to cat_id
+    c = Category.objects.get(id = cat_id)
+    c.view = False
+    c.save()
+    
+    return HttpResponseRedirect(reverse("jokesapp:categories" , args=()))
+
+# restore catgeory in corbeille
+def restore_cat(request , cat_id):
+     # /get category which corrspond to cat_id
+    c = Category.objects.get(id = cat_id)
+    c.view = True
+    c.save()
+    
+    return HttpResponseRedirect(reverse("jokesapp:categories" , args=()))
 
 # views joke by category
 def display_joke_by_category(request , cat_id):

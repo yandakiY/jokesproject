@@ -16,7 +16,7 @@
                 <select name="category" id="category">
                     {% for cat in categories %}
                         {% if cat.id == joke.category.id %}
-                            <option value="{{joke.category.id}}" selected>{{cat.libelle}}</option>
+                            <option valuwe="{{joke.category.id}}" selected>{{cat.libelle}}</option>
                         {% else %}
                             <option value="{{joke.category.id}}">{{cat.libelle}}</option>
                         {% endif %}

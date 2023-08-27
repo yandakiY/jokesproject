@@ -8,8 +8,9 @@
 <body>
     
     <h1>Lists of categories</h1>
-    <div>
+    <div style="display: flex; gap:5px;">
         <a href="{% url 'jokesapp:create_cat' %}">Add a category</a>
+        <a href="{% url 'jokesapp:categories_deleted' %}">Categories in corbeille</a>
     </div>
     <div>
         <ul>
@@ -20,7 +21,7 @@
                         <a href="{% url 'jokesapp:display_joke_by_category' cat.id %}">({{cat.joke_set.all.count}} Jokes)</a>
                         {% else %}(0 Jokes)
                     {% endif %} 
-                    - <a href="{% url 'jokesapp:update_cat' cat.id %}">Update</a> - <a href="{% url 'jokesapp:delete_cat' cat.id %}">Delete</a>
+                    - <a href="{% url 'jokesapp:update_cat' cat.id %}">Update</a> - <a href="{% url 'jokesapp:remove_cat' cat.id %}">Delete</a>
                 </li>
             {% endfor %}
         </ul>

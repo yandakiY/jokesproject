@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Lists of jokes deleted</h1>
+    <!-- <a href="{% url 'jokesapp:categories' %}">Categories</a>
+    <div>
+        <a href="{% url 'jokesapp:create' %}">Add a joke</a>
+    </div> -->
+    {% if jokes %}
+        <div>
+            <ul>
+                {% for joke in jokes %}
+                    <li>
+                        {{joke.question}}
+                        ({{joke.category}}) - <a href="{% url 'jokesapp:restore_joke' joke.id %}">Restore</a> - <a href="{% url 'jokesapp:delete' joke.id %}">Delete</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div>No jokes deleted</div>
+    {% endif %}
+
+</body>
+</html>

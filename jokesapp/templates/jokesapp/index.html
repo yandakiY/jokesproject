@@ -11,13 +11,14 @@
     <a href="{% url 'jokesapp:categories' %}">Categories</a>
     <div>
         <a href="{% url 'jokesapp:create' %}">Add a joke</a>
+        <a href="{% url 'jokesapp:joke_deleted' %}">Jokes in corbeille</a>
     </div>
     <div>
         <ul>
             {% for joke in jokes %}
                 <li>
                     {{joke.question}}
-                    ({{joke.category}}) - <a href="{% url 'jokesapp:update' joke.id %}">Update</a> - <a href="{% url 'jokesapp:delete' joke.id %}">Delete</a>
+                    ({{joke.category}}) - <a href="{% url 'jokesapp:update' joke.id %}">Update</a> - <a href="{% url 'jokesapp:remove_joke' joke.id %}">Delete</a>
                 </li>
             {% endfor %}
         </ul>

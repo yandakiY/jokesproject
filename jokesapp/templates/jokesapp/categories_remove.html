@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Lists of categories deleted</h1>
+    <!-- <div>
+        <a href="{% url 'jokesapp:create_cat' %}">Add a category</a>
+    </div> -->
+    {% if categories.count %}
+        <div>
+            <ul>
+                {% for cat in categories %}
+                    <li>
+                        {{cat.libelle}} - 
+                        <!-- {% if cat.joke_set.all.count %}
+                            <a href="{% url 'jokesapp:display_joke_by_category' cat.id %}">({{cat.joke_set.all.count}} Jokes)</a>
+                            {% else %}(0 Jokes)
+                        {% endif %}  -->
+                        - <a href="{% url 'jokesapp:restore_cat' cat.id %}">Restore</a> - <a href="{% url 'jokesapp:delete_cat' cat.id %}">Delete</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div>No categories deleted</div>
+    {% endif %}
+
+</body>
+</html>

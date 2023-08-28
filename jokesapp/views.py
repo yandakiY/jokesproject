@@ -183,3 +183,14 @@ def display_joke_by_category(request , cat_id):
     print(joke_for_cat)
     
     return render(request , "jokesapp/list_joke_by_category.html" , {"jokes":joke_for_cat , "category":cat})
+
+
+# Search a joke , views result.
+def search_joke_by_word(request):
+    # get word params 
+    word = request.GET.get("word")
+    print("Word is:",word)
+    jokes = Joke.objects.filter(question__contains=word)
+    # pri
+    # redirection to result
+    return render(request , "jokesapp/search_joke_by_word.html" , {"jokes":jokes , "query":word})

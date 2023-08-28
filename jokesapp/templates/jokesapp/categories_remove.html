@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jokesapp/lists.css' %}"/>
+    <title>Categories in "corbeille"</title>
 </head>
 <body>
     
@@ -11,24 +17,34 @@
     <!-- <div>
         <a href="{% url 'jokesapp:create_cat' %}">Add a category</a>
     </div> -->
-    {% if categories.count %}
-        <div>
-            <ul>
-                {% for cat in categories %}
-                    <li>
-                        {{cat.libelle}} - 
-                        <!-- {% if cat.joke_set.all.count %}
-                            <a href="{% url 'jokesapp:display_joke_by_category' cat.id %}">({{cat.joke_set.all.count}} Jokes)</a>
-                            {% else %}(0 Jokes)
-                        {% endif %}  -->
-                        - <a href="{% url 'jokesapp:restore_cat' cat.id %}">Restore</a> - <a href="{% url 'jokesapp:delete_cat' cat.id %}">Delete</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% else %}
-        <div>No categories deleted</div>
-    {% endif %}
+
+    <div>
+        {% if categories.count %}
+            <table class="table table-hover table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in categories %}
+                        <tr>
+                            <td>{{cat.id}}</td>
+                            <td>{{cat.libelle}}</td>
+                            <td>
+                                <a class="btn btn-primary"  href="{% url 'jokesapp:restore_cat' cat.id %}">Restore</a> - <a class="btn btn-danger"  href="{% url 'jokesapp:delete_cat' cat.id %}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div>No categories deleted</div>
+        {% endif %}
+    </div>
+
 
 </body>
 </html>

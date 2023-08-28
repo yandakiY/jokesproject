@@ -3,28 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jokesapp/lists.css' %}"/>
     <title>Document</title>
 </head>
 <body>
     
-    <h1>Lists of categories</h1>
-    <div style="display: flex; gap:5px;">
-        <a href="{% url 'jokesapp:create_cat' %}">Add a category</a>
-        <a href="{% url 'jokesapp:categories_deleted' %}">Categories in corbeille</a>
+    {% comment %} header {% endcomment %}
+    <div class="links">
+        <h1>Lists of categories</h1>
+        <div style="display: flex; gap:15px;">
+            <a class="link" href="{% url 'jokesapp:create_cat' %}">Add a category</a>
+            <a class="link" href="{% url 'jokesapp:categories_deleted' %}">Categories in corbeille</a>
+        </div>
     </div>
-    <div>
-        <ul>
-            {% for cat in categories %}
-                <li>
-                    {{cat.libelle}} - 
-                    {% if cat.joke_set.all.count %}
-                        <a href="{% url 'jokesapp:display_joke_by_category' cat.id %}">({{cat.joke_set.all.count}} Jokes)</a>
-                        {% else %}(0 Jokes)
-                    {% endif %} 
-                    - <a href="{% url 'jokesapp:update_cat' cat.id %}">Update</a> - <a href="{% url 'jokesapp:remove_cat' cat.id %}">Delete</a>
-                </li>
-            {% endfor %}
-        </ul>
+
+    <div style="text-align:center;">
+        <table class="table table-hover table-bordered border-dark">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Numbers of jokes</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories %}
+                    <tr>
+                        <td>{{cat.id}}</td>
+                        <td>{{cat.libelle}}</td>
+                        <td>
+                            {% if cat.joke_set.all.count %}
+                                <a href="{% url 'jokesapp:display_joke_by_category' cat.id %}">({{cat.joke_set.all.count}} Jokes)</a>
+                                {% else %}(0 Jokes)
+                            {% endif %} 
+                        </td>
+                        <td>
+                            <a class="btn btn-dark" href="{% url 'jokesapp:update_cat' cat.id %}">Update</a> - <a class="btn btn-danger" href="{% url 'jokesapp:remove_cat' cat.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'jokesapp:Index' %}">Go to home page</a>
     </div>
 
 </body>

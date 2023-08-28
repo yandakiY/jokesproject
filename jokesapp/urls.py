@@ -31,5 +31,7 @@ urlpatterns = [
     # restore element - path
     path('<int:cat_id>/restore_cat', views.restore_cat , name="restore_cat"),
     path('<int:joke_id>/restore_joke', views.restore_joke , name="restore_joke"),
+    # search a joke by word
+    path('search_joke' , views.search_joke_by_word, name="search_joke")
     
 ]

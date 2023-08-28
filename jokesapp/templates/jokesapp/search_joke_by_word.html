@@ -3,22 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     
     
     {% load static %}
-    <link rel="stylesheet" href="{% static 'jokesapp/lists.css' %}"/>
+    <link rel="stylesheet" href="{% static 'jokesapp/index.css' %}"/>
     <title>Document</title>
 </head>
 <body>
     
-    <h1>Jokes for : {{cat.libelle}} </h1>
-    <div>
+    <!-- header -->
+    <div style="display: flex;justify-content: space-between;align-items: center;border-bottom:solid;margin:15px;">
+        <h1>Lists of jokes</h1>
+        <form method="get" action="{% url 'jokesapp:search_joke' %}">
+            {% csrf_token %}
+            <div style="display:flex;flex-direction: column;">
+                <label for="word">Search by joke :</label>
+                <input 
+                    style="height: 40px;border-radius: 3px;border: solid .5px;outline: none;"
+                    type="search" name="word" id="word" placeholder="Search a joke..."
+                >
+            </div>
+        </form>
+    </div>
 
-        {% if jokes %}
-            <table class="table table-hover table-bordered border-dark">
+    {% if jokes %}
+        <div style="display:flex; justify-content:center; align-items:center;height:60vh;margin:100px;">
+            <table class="table table-hover table-bordered border-dark text-center">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -40,19 +52,20 @@
                                 {{joke.category}}
                             </td>
                             <td>
+                                {% comment %} <ahref="{% url 'jokesapp:update_cat' cat.id %}">Update</a> - <ahref="{% url 'jokesapp:remove_cat' cat.id %}">Delete</a> {% endcomment %}
                                 <a class="btn btn-primary"  href="{% url 'jokesapp:update' joke.id %}">Update</a> - <a class="btn btn-danger"  href="{% url 'jokesapp:remove_joke' joke.id %}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        {% else %}
-            <div>No jokes deleted</div>
-        {% endif %}
-    </div>
-    <div>
-        <a href="{% url 'jokesapp:categories' %}">Return</a>
-    </div>
+        </div>
+    {% else %}
+        <div style="display:flex;flex-direction:column;align-items:center; justify-content:center;font-weight:bold;font-size:20px;margin-top:100px;">
+            <p>No jokes deleted</p>
+            <a href="{% url 'jokesapp:Index' %}">Return to home page</a>
+        </div>
+    {% endif %}    
 
 </body>
 </html>

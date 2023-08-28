@@ -3,29 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jokesapp/lists.css' %}"/>
+    <title>Jokes in "corbeille"</title>
 </head>
 <body>
     
     <h1>Lists of jokes deleted</h1>
-    <!-- <a href="{% url 'jokesapp:categories' %}">Categories</a>
+
     <div>
-        <a href="{% url 'jokesapp:create' %}">Add a joke</a>
-    </div> -->
-    {% if jokes %}
-        <div>
-            <ul>
-                {% for joke in jokes %}
-                    <li>
-                        {{joke.question}}
-                        ({{joke.category}}) - <a href="{% url 'jokesapp:restore_joke' joke.id %}">Restore</a> - <a href="{% url 'jokesapp:delete' joke.id %}">Delete</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% else %}
-        <div>No jokes deleted</div>
-    {% endif %}
+        {% if jokes %}
+            <table class="table table-hover table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Joke</th>
+                        <th>Answer</th>
+                        <th>Category</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for joke in jokes %}
+                        <tr>
+                            <td>{{joke.id}}</td>
+                            <td>{{joke.question}}</td>
+                            <td>
+                                {{joke.answer}}
+                            </td>
+                            <td>
+                                {{joke.category}}
+                            </td>
+                            <td>
+                                {% comment %} <ahref="{% url 'jokesapp:update_cat' cat.id %}">Update</a> - <ahref="{% url 'jokesapp:remove_cat' cat.id %}">Delete</a> {% endcomment %}
+                                <a class="btn btn-primary"  href="{% url 'jokesapp:restore_joke' joke.id %}">Restore</a> - <a class="btn btn-danger"  href="{% url 'jokesapp:delete' joke.id %}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div>No jokes deleted</div>
+        {% endif %}
+    </div>
 
 </body>
 </html>
